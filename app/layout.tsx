@@ -62,14 +62,15 @@ const akiraFont = localFont({
     variable: "--akira-font",
 });
 
-export default function RootLayout({
+export default async function RootLayout({
                                        children,
                                    }: Readonly<{
     children: React.ReactNode;
 }>) {
 
-    const pathname = headers().get('x-url');
-    const pathHasBackButton = matchesAny(pathname as string, pathsHavingBackButton);
+    const headerList = await headers();
+    const pathname = headerList.get("x-url") ?? "";
+    const pathHasBackButton = matchesAny(pathname, pathsHavingBackButton);
 
     return (
         <html
